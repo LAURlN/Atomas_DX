@@ -20,7 +20,7 @@ The user selected:
 - A mobile-first web app hosted on GitHub Pages, also playable on desktop.
 - The primary agent orchestrates subagents. Never use Astra.
 
-Everything under proposed design remains a recommendation, not an approved specification. This document records research and design only; it does not authorize deployment or imply implementation is underway.
+This document retains the research and design exploration. The user subsequently authorized implementation and deployment to GitHub Pages; see the prototype specification and repository README for the implemented scope. Ideas outside that scope remain proposals.
 
 ## Research: what Atomas actually offers
 
@@ -168,7 +168,7 @@ Build the reaction engine separately from presentation so we can verify circular
 
 ## Prototype handoff
 
-The major design choices are settled. See [prototype specification](./prototype-spec.md) for the compact first-playable scope. Numeric balance, individual relic effects and presentation details are provisional defaults to test, rather than another requirements interview. Implementation and publishing have not been requested by the current research task.
+The major design choices are settled. See [prototype specification](./prototype-spec.md) for the first-playable scope, now authorized for implementation and GitHub Pages deployment. Numeric balance, individual relic effects and presentation details remain adjustable through playtesting.
 
 ## Research limits
 

@@ -1,6 +1,6 @@
 # Alchemy survival — first playable specification
 
-Status: consolidated design for implementation handoff. The user decisions below are settled; all numeric defaults and proposed content can change through playtesting. Working title only.
+Status: playable prototype implemented as Athanor. The user decisions below are settled; numeric defaults and proposed content can change through playtesting.
 
 ## Agreed game
 
@@ -17,6 +17,8 @@ A mobile-first circular alchemy puzzle that runs as a static GitHub Pages web ap
 ## First playable content
 
 One survival mode, one initial vessel style, eight relics, three consumable types, next-three-piece forecast, full reaction preview, recurring rewards, run statistics and save/resume. Use procedural/vector magical symbols and readable ranks; do not require external artwork to validate the puzzle.
+
+Agent playtesting is an explicit requirement: provide seeded headless runs, replayable action traces, readable legal actions and previews, stable UI selectors, and an isolated browser automation interface that preserves normal player saves. See [agent playtesting](./agent-playtesting.md).
 
 Initial relic set: Prismatic Lens, Twinned Phial, Resonant Bell, Glass Halo, Silver Tongs, Echo Urn, Blood Crucible and Phoenix Seal. Effects and charges are drafted in the [design brief](./research-and-design.md#proposed-relic-families).
 
@@ -66,4 +68,4 @@ Verify circular wraparound, chain arithmetic and termination, dormant catalyst a
 
 Check small portrait and desktop layouts, touch/mouse input cancellation, rapid duplicate input, reduced motion, refresh after an item use or while choosing a reward, and asset paths under a project subdirectory.
 
-Research sources and known gaps are retained in the [research and design brief](./research-and-design.md). No implementation, repository publication or live deployment has been performed as part of this specification.
+Research sources and known gaps are retained in the [research and design brief](./research-and-design.md). See the repository README for play, test and deployment instructions.
