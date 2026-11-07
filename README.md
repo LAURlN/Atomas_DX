@@ -6,7 +6,7 @@ Play at **https://laurln.github.io/Atomas_DX/** after deployment.
 
 ## Play
 
-Select a gap in the vessel to preview the incoming ingredient, then confirm placement. Place a catalyst between equal ranks to fuse them. Mirrored pairs farther out continue the chain, making a stronger ingredient and opening space. Unmatched catalysts stay in the vessel until their neighbors match.
+Tap a gap or the space between two ingredients to place immediately. A catalyst between equal ranks fuses them. Mirrored pairs farther out continue the chain, making a stronger ingredient and opening space. Watch matching pairs flow inward, then the vessel rearrange around the result. Unmatched catalysts stay until their neighbors match.
 
 The same vessel survives throughout a run. Overcrowding is the only loss condition. Reactions earn Essence toward recurring three-way rewards. Keep every acquired relic until the run ends. Store up to three single-use consumables and use them before committing a placement. Extraction tools let you pick up an ingredient to reposition or convert into a catalyst.
 
@@ -26,6 +26,8 @@ npm start
 Open the printed local URL. `npm run build` packages only the game into `dist/`, using relative asset paths compatible with a GitHub Pages project subdirectory.
 
 With the local server running, `npm run test:browser` runs the interaction checks. It uses installed Microsoft Edge on Windows; on other systems install Playwright Chromium with `npx playwright install chromium`. Set `BASE_URL` to test a deployed copy or the local `/dist/` path.
+
+`npm run test:motion` checks real animations, input locking, reload/cancellation safety, reduced motion, direct taps and mobile layouts. Saves commit before animation; animation speed never changes the game rules.
 
 ## Deploy
 

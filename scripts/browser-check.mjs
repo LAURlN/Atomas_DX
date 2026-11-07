@@ -30,14 +30,11 @@ async function fixture(page, kind) {
   await page.reload();
 }
 try {
-  await check('mobile first reaction, preview purity and reload persistence', async () => {
+  await check('mobile direct-tap reaction and reload persistence', async () => {
     const {context,page}=await setup();
     assert.equal(await page.locator('.inventory-slot').count(),3);
     const before=await saved(page);
     await page.locator('[data-action="gap"][data-index="2"]').click();
-    assert.deepEqual(await saved(page),before);
-    assert.match(await page.locator('.action-copy').innerText(),/2 matching pairs/);
-    await page.locator('[data-action="place"]').click();
     const after=await saved(page);
     assert.equal(after.turns,1);assert.equal(after.last.pairs,2);assert.equal(after.ring.length,2);
     await page.reload();assert.deepEqual(await saved(page),after);
@@ -61,7 +58,7 @@ try {
   });
   await check('reward draft persists, full inventory replacement is explicit', async () => {
     const {context,page}=await setup();await fixture(page,'reward');
-    await page.locator('[data-action="gap"][data-index="2"]').click();await page.locator('[data-action="place"]').click();
+    await page.locator('[data-action="gap"][data-index="2"]').click();
     const pending=await saved(page);assert.ok(pending.pendingReward);
     await page.reload();assert.deepEqual(await saved(page),pending);
     const index=pending.pendingReward.options.findIndex(o=>o.type==='consumable');
@@ -82,8 +79,6 @@ try {
   await check('fatal warning, overflow death, restart and archive preservation', async () => {
     const {context,page}=await setup();await fixture(page,'overflow');
     await page.locator('[data-action="gap"][data-index="0"]').click();
-    assert.match(await page.locator('.action-copy').innerText(),/This ends your run/);
-    await page.locator('[data-action="place"]').click();
     assert.ok((await saved(page)).over);
     await page.reload();assert.ok((await saved(page)).over);
     await page.locator('[data-action="new"][data-starter="standard"]').click();
@@ -91,11 +86,11 @@ try {
     assert.ok(fresh.eligibleRelics.includes('phoenix'));
     await context.close();
   });
-  await check('desktop help, keyboard placement and layout', async () => {
+  await check('desktop help, direct placement and layout', async () => {
     const {context,page}=await setup({width:1440,height:1000});
     await page.locator('[data-action="help"]').first().click();
     await page.getByRole('button',{name:'Close help'}).click();
-    await page.locator('[data-action="gap"][data-index="2"]').click();await page.keyboard.press('Enter');
+    await page.locator('[data-action="gap"][data-index="2"]').click();
     assert.equal((await saved(page)).turns,1);
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
     await page.screenshot({path:'test-results/desktop.png',fullPage:true});await context.close();
@@ -127,7 +122,7 @@ try {
     const {context,page}=await setup();
     await page.evaluate(()=>{localStorage.setItem('athanor.run.v1','{"version":1}');localStorage.setItem('athanor.archive.v1','{"unlockedStarters":null,"unlockedRelics":null,"discoveries":null}');});
     await page.reload();await page.locator('[data-action="begin"]').click();
-    await page.locator('[data-action="gap"][data-index="2"]').click();await page.locator('[data-action="place"]').click();
+    await page.locator('[data-action="gap"][data-index="2"]').click();
     assert.equal((await saved(page)).turns,1);await context.close();
   });
 } finally { await browser.close(); }

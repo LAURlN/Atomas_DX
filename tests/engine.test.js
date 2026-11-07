@@ -6,6 +6,16 @@ import {
 } from '../src/engine.js';
 
 const clone = value => JSON.parse(JSON.stringify(value));
+test('reaction events preserve actual pair order and intermediate ranks for animation', () => {
+  const before = createGame(42);
+  const after = place(before, 2);
+  assert.deepEqual(after.last.events, [
+    { centerId: before.incoming.id, leftId: before.ring[1].id, rightId: before.ring[2].id, rank: 2 },
+    { centerId: before.incoming.id, leftId: before.ring[0].id, rightId: before.ring[3].id, rank: 4 },
+  ]);
+  assert.deepEqual(previewPlacement(before, 2).last.events, after.last.events);
+  assert.deepEqual(before.last.events, []);
+});
 const atom = (rank, id) => ({ id: String(id), kind: 'ingredient', rank });
 const catalyst = id => ({ id: String(id), kind: 'catalyst' });
 function fixture(ranks = [], incoming = catalyst('incoming')) {

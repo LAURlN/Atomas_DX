@@ -12,3 +12,15 @@
 - Publication: authorized by the user; pushed only after approval. See GitHub Actions for the deployment result.
 
 Review result: <t3-thread://v2/dab0fa82-c5ef-4226-9c2d-bb20d56b8398/thread:delegated-task:command%3Amcp%3A9b87a73f-6c87-45fd-81fd-a69fc3c414b3%3Adelegate-task%3A479b295b-3643-4bd8-a6cc-217a154f0025>
+
+## Animated redesign and direct placement
+
+- Base: `eac59c2c706e5a2cc0733635192efbf508ea3d4f`.
+- Scope: vivid styling, staged placement and pair-fusion animations, immediate gap/annulus placement, input locking, safe cancellation and agent `whenIdle` integration.
+- Reviewer: `gpt-6.1-sol`, provider `codex`, verified reasoning effort `high`.
+- Completed full rounds: 1. Verdict: **APPROVE**. No findings requested, fixed or declined; no behavior changes after review.
+- Reviewer independently ran 39/39 Node tests. Root passed seven gameplay browser checks and nine animation checks, including direct tapping, real effects, cancel/reload safety, reduced motion and 320px/desktop layouts; screenshots inspected during and after reactions.
+- Diff before/after review: unchanged at 12 files, 730 insertions and 65 deletions. This documentation entry follows review.
+- Token usage: not exposed. Publication authorized by the ongoing deployment request; pushed after approval.
+
+Review result: <t3-thread://v2/dab0fa82-c5ef-4226-9c2d-bb20d56b8398/thread:delegated-task:command%3Amcp%3A9b87a73f-6c87-45fd-81fd-a69fc3c414b3%3Adelegate-task%3A08ebbd05-c897-462e-930e-4fb7cdb8e5b4>

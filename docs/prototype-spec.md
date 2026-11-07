@@ -11,12 +11,12 @@ A mobile-first circular alchemy puzzle that runs as a static GitHub Pages web ap
 - Reactions earn Essence toward recurring reward drafts.
 - All acquired relics stay for the run, with no equipped-slot limit. A new run starts a fresh build.
 - Three consumable slots, one use per slot. On a full inventory, replace an item or decline the pickup.
-- Consumables act before a placement is committed. Preview clearly warns about a fatal placement; there is no manual rescue window afterward.
+- Consumables act before placement. A tap between ingredients commits immediately, including a fatal move; there is no placement preview, confirmation button or manual rescue window afterward.
 - Between-run unlocks add relics and starting options, rather than permanent stat increases.
 
 ## First playable content
 
-One survival mode, one initial vessel style, eight relics, three consumable types, next-three-piece forecast, full reaction preview, recurring rewards, run statistics and save/resume. Use procedural/vector magical symbols and readable ranks; do not require external artwork to validate the puzzle.
+One survival mode, one initial vessel style, eight relics, three consumable types, next-three-piece forecast, recurring rewards, run statistics and save/resume. Vivid magical ingredients, animated placements, sequential pair absorption and smooth vessel rearrangement support immediate one-tap play. Programmatic previews remain available for agents.
 
 Agent playtesting is an explicit requirement: provide seeded headless runs, replayable action traces, readable legal actions and previews, stable UI selectors, and an isolated browser automation interface that preserves normal player saves. See [agent playtesting](./agent-playtesting.md).
 
@@ -39,14 +39,14 @@ Consumables: Solvent removes a chosen ordinary ingredient; Twin Draught copies a
 
 ## Resolution and rewards
 
-1. Player optionally uses consumables or charged relic actions. Update forecast and preview after each confirmed action.
-2. Player chooses an insertion gap and sees the complete predicted reaction and final occupancy.
-3. Player commits the placement. Resolve reactions and triggered effects in a deterministic order.
+1. Player optionally uses consumables or charged relic actions. Update the forecast after each action.
+2. Player taps an insertion gap or the space between ingredients to commit immediately. Keyboard users can select a gap with arrows and commit with Enter.
+3. Resolve reactions and triggered effects in a deterministic order. Save the committed result immediately and animate recorded pair events in order. Block further actions until the short presentation settles.
 4. Apply any equipped automatic overflow protection, then check capacity. If still above capacity, end the run.
 5. If alive, award pending Essence and present any earned reward choices. Keep the vessel intact. Carry excess progress forward; handle multiple earned rewards sequentially.
 6. Save the settled state and continue with the next piece. Animations must not permit duplicate inputs.
 
-The preview must use the same rules as execution without consuming charges, advancing randomness, granting rewards or changing saved state. A fatal preview warning permits deliberate confirmation rather than silently forbidding the action.
+Agent previews use the same rules as execution without consuming charges, advancing randomness, granting rewards or changing saved state. Normal gameplay does not display a placement preview or ask for confirmation. Reduced-motion preferences skip movement effects. Reloading during a reaction restores the committed result without replaying or losing an action.
 
 Resolve competing relic effects in acquisition order. Bind future-draw replacements to specific draw identities; once a draw has a pending replacement, defer a conflicting replacement to the next eligible ordinary draw rather than silently discarding either effect. Preview and save data include modified draws, charges, pending effects and used automatic protection. This ordering is an initial implementation default to validate through playtesting.
 
@@ -57,7 +57,7 @@ Track best survival, highest ingredient and discoveries. Provide a small unlock 
 ## Mobile and desktop
 
 - Portrait-first vessel with large insertion targets, visible incoming piece, capacity, forecast and three accessible consumable slots.
-- Select a gap to preview, then explicitly commit. Support touch and mouse with no hover-only controls.
+- Tap a gap or between ingredients to place directly. Support touch and mouse, with no hover-only controls or confirmation step.
 - Magical symbols, numeric ranks and color together; reduced-motion support and skippable/fast reactions.
 - Static assets work under a GitHub Pages repository subpath; no backend or account is required.
 - Save after every confirmed state mutation, including consumable/relic use and reward selection. Preserve a pending reward and deterministic future draws across reloads.

@@ -18,7 +18,7 @@ const RIDS = RELICS.map(r => r.id);
 const CIDS = CONSUMABLES.map(r => r.id);
 const NAMES = ['Dew', 'Ember', 'Moon Salt', 'Foxglove', 'Sunstone', 'Star Moss', 'Quicksilver', 'Dragon Ash', 'Void Pearl', 'Aether', 'Soulglass', 'Astral Gold'];
 const SYMBOLS = ['✦', '△', '☾', '❋', '◇', '✳', '☿', '♜', '◉', '✧', '⬡', '☼'];
-const COLORS = ['#86d6ca', '#f09d74', '#b8b0ec', '#c4d68b', '#ebca76', '#88baa4', '#9abfdf', '#d99caf', '#b897e3', '#95d9e1', '#ddc4ee', '#f0d489'];
+const COLORS = ['#52f2d0', '#ff9466', '#b497ff', '#d4f36b', '#ffd45c', '#70e99a', '#6ebdff', '#ff80b7', '#c582ff', '#5ee7ff', '#f2a2ff', '#ffe493'];
 export function ingredient(rank) {
   const i = (Math.max(1, Math.trunc(rank)) - 1) % NAMES.length;
   return { name: NAMES[i] + (rank > 12 ? ` ${Math.ceil(rank / 12)}` : ''), symbol: SYMBOLS[i], color: COLORS[i] };
@@ -87,7 +87,7 @@ function ensurePlayable(s) {
   return false;
 }
 function message(s, value) {
-  s.last = { pairs: 0, chains: 0, longest: 0, essence: 0, message: value, removedIds: [] };
+  s.last = { pairs: 0, chains: 0, longest: 0, essence: 0, message: value, removedIds: [], events: [] };
 }
 export function createGame(seed = 1, starter = 'standard', meta) {
   const numericSeed = Number.isFinite(Number(seed)) ? Number(seed) >>> 0 : 1;
@@ -115,6 +115,7 @@ function collapse(s, centerId, first) {
   const left = s.ring[li], right = s.ring[ri], center = s.ring[i];
   if (left.kind !== 'ingredient' || right.kind !== 'ingredient' || left.rank !== right.rank) return false;
   const rank = first ? left.rank + 1 : Math.max(center.rank + 1, left.rank + 2);
+  s.last.events.push({ centerId, leftId: left.id, rightId: right.id, rank });
   s.last.removedIds.push(left.id, right.id);
   s.ring = s.ring.filter((_, k) => k !== li && k !== ri).map(p => p.id === centerId ? { id: centerId, kind: 'ingredient', rank } : p);
   s.highest = Math.max(s.highest, rank);

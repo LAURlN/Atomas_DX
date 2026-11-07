@@ -15,7 +15,7 @@ The user selected:
 - Reactions earn progress toward recurring reward drafts throughout survival, including after new ingredient discoveries slow down.
 - Keep all acquired relics for the run; there is no equipped-relic slot limit.
 - Three consumable slots, one use per slot, with replace-or-decline when full.
-- Consumables are used before committing a placement. No manual rescue window after a fatal settled result; preview warns before commitment.
+- Consumables are used before placement. Normal play uses a direct tap between ingredients, without a preview or confirmation step. No manual rescue window follows a fatal settled result.
 - Alchemy and magical ingredients as the theme.
 - A mobile-first web app hosted on GitHub Pages, also playable on desktop.
 - The primary agent orchestrates subagents. Never use Astra.
@@ -59,7 +59,7 @@ Source: [official Atomas Neo page](https://sirnic.com/atomasneo/).
 3. Placement matters more than passive stat accumulation. A relic should often change where or when the player inserts an ingredient.
 4. Rescue tools provide agency without making arrangement irrelevant.
 5. Randomness should create decisions players can anticipate. Show upcoming ingredients and test a bounded catalyst drought.
-6. A reaction preview must explain the actual outcome after relics and consumables apply.
+6. Visible reaction animation follows actual engine events. Agent previews remain accurate after relics and consumables apply.
 
 ## Proposed alchemy interpretation
 
@@ -94,7 +94,7 @@ Permanent upgrades change the ongoing rules and support a build for the current 
 
 ### Overflow proposal
 
-Only the final settled vessel state can cause death. Resolve a committed placement, its reactions and any already-equipped automatic rescue before checking capacity. The UI must clearly warn about a predicted fatal placement. Consumables can be used before committing; there is no post-overflow manual rescue window. A warning does not forbid knowingly committing a fatal placement.
+Only the final settled vessel state can cause death. Resolve a committed placement, its reactions and any already-equipped automatic rescue before checking capacity. A normal tap commits directly with no placement preview or confirmation. Occupancy remains visible; consumables can be used before placing, with no post-overflow manual rescue window.
 
 Candidate boundary: capacity is the maximum stable piece count; a settled count above capacity ends the run. This is our proposed rule, not a verified claim about Atomas. For the first prototype, suppress a capacity-reducing relic offer if accepting it would immediately put the current vessel above its new capacity. Always display the resulting capacity before acceptance. Safe acquisition does not reset or clear the vessel.
 
@@ -148,18 +148,18 @@ Relics may create strong, surprising combinations, but effects must terminate an
 - Snapshot reaction starting conditions and settle rewards after the reaction completes.
 - Only deliberate extraction activates extraction relics. Fusion, delayed removal and overflow rescue do not.
 - Specify conflicts between future-draw replacements before implementation. The UI must show the actual modified queue and allow a player to decline optional replacements.
-- Predict the complete modified result before committing placement; show each effect during resolution and permit faster animation afterward.
+- Keep programmatic predictions accurate for agents; show each effect during direct placement resolution, with reduced-motion support.
 
 ## Proposed first playable slice
 
-One endless survival mode with a persistent vessel, six to eight relics spanning at least two interacting families, three collectible consumables, and recurring reward choices. Include ordinary ingredients, catalysts, extraction, upcoming-piece preview, reaction prediction, deterministic seeds and local save/resume. No bosses or encounter scaffolding.
+One endless survival mode with a persistent vessel, six to eight relics spanning at least two interacting families, three collectible consumables, and recurring reward choices. Include ordinary ingredients, catalysts, extraction, upcoming-piece forecast, programmatic reaction prediction, deterministic seeds and local save/resume. No bosses or encounter scaffolding.
 
 Build the reaction engine separately from presentation so we can verify circular wraparound, chain termination, overflow timing, relic ordering and save/resume behavior. Expand content after relic choices change actual placement decisions and long-run progression remains interesting.
 
 ### Mobile and desktop requirements
 
 - Static deployable assets compatible with a GitHub Pages project subpath; no required server.
-- Touch-first placement preview and deliberate confirmation, with equivalent mouse controls.
+- Touch-first direct placement between ingredients, with equivalent mouse controls; no preview-and-confirm flow. Animate recorded reactions with reduced-motion support.
 - Fit the vessel, incoming piece, forecast, capacity and consumable access on a small portrait screen. Relic details and reward progress can expand on tap.
 - Readable symbols/ranks and large touch targets; do not rely on color or hover.
 - Save after committed actions and resume an interrupted mobile session. Explain that browser storage is local to that browser/device.

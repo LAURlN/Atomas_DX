@@ -25,10 +25,11 @@ window.athanor.snapshot() // {version, phase, state, meta, actions}
 window.athanor.actions()  // every currently valid action, with label and outcome
 window.athanor.preview({type:'place', gap:2}) // {accepted, state}; no mutation
 window.athanor.act({type:'place', gap:2})     // {accepted, ...snapshot}
+await window.athanor.whenIdle()             // await presentation before next browser action
 window.athanor.reset({seed:42})
 ```
 
-`phase` is `place`, `extract`, `reward` or `over`. State is JSON-serializable and contains the vessel in clockwise order, incoming piece, three-piece forecast, occupancy limit, relics/charges, inventory, progress, last reaction and pending rewards. Returned objects are copies, so modifying a snapshot cannot change the live game.
+`phase` is `place`, `extract`, `reward`, `over` or `animating`; `busy` reports presentation in progress. During motion, `actions()` returns no actions and `act` returns `accepted:false, reason:'busy'`. Await `whenIdle()` before the next action. Reduced-motion mode settles immediately; the headless CLI has no animation wait. State is JSON-serializable and contains the vessel in clockwise order, incoming piece, three-piece forecast, occupancy limit, relics/charges, inventory, progress, last reaction and pending rewards. Returned objects are copies, so modifying a snapshot cannot change the live game.
 
 Actions returned by `actions()` can be passed unchanged to `preview` and `act`. They use these fields:
 
@@ -54,18 +55,21 @@ A minimal browser agent loop:
 const before = window.athanor.snapshot();
 const placements = before.actions.filter(a => a.type === 'place' && !a.outcome.over);
 placements.sort((a,b) => a.outcome.occupancy-b.outcome.occupancy || b.outcome.pairs-a.outcome.pairs);
-if (placements.length) window.athanor.act(placements[0]);
+if (placements.length) {
+  window.athanor.act(placements[0]);
+  await window.athanor.whenIdle();
+}
 // For extract/reward phases choose an appropriate action from snapshot.actions.
 ```
 
-Use an action budget when looping: tools can be valid without advancing the placement counter. Never wait for a timer or animation to advance the game.
+Use an action budget when looping: tools can be valid without advancing the placement counter. Engine state commits immediately, then browser presentation settles through `whenIdle()`; the game has no real-time progression timer.
 
 ## UI-only browser agents
 
 Controls have semantic buttons and stable `data-action` attributes:
 
-- `[data-action="gap"][data-index="2"]`: select and preview a gap.
-- `[data-action="place"]`: commit the selected placement.
+- `[data-action="gap"][data-index="2"]`: place immediately in a gap; no confirmation.
+- Empty space within the vessel's ring annulus also places in the nearest gap.
 - `[data-action="consumable"][data-index="0"]:visible`: select a preparation. Mobile/desktop render separate racks, so choose the visible one.
 - `[data-action="target"][data-id="p3"]`, then `[data-action="confirm-target"]`: select and confirm an ingredient.
 - `[data-action="cancel-target"]`: cancel targeting without spending.
@@ -73,7 +77,7 @@ Controls have semantic buttons and stable `data-action` attributes:
 - `[data-action="replace"][data-index="1"]`: choose the inventory slot to replace.
 - `[data-action="decline"]`: decline the current draft.
 
-Arrow keys cycle gaps; selecting a gap focuses the commit button for Enter. Modal dialogs expose accessible names. Re-observe after each committed action because the DOM is rerendered.
+Arrow keys cycle gaps and Enter commits the selected gap. Modal dialogs expose accessible names. Re-observe after each committed action because the DOM is rerendered. Wait for `#app[data-resolving]` to disappear, or use `whenIdle()`, before another browser action.
 
 ## Reproduce a bug
 
